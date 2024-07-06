@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #404e72;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.calculator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#input-number {
+    width: 540px;
+    height: 128px;
+    border-radius: 10px;
+    border: none;
+    background-color: #182034;
+}
+
+.keypad {
+    display: grid;
+    max-width: 540px;
+    max-height: 480px;
+    border-radius: 10px;
+    background-color: #232c43;
+
+    padding: 32px;
+    gap: 25px;
+}
+.btn-num,
+.operator,
+#delete {
+    width: 101px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-num,
+.operator {
+    color: #444b5a;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.keypad .btn-num,
+.keypad .operator {
+    background-color: #eae3dc;
+    box-shadow: 0 4px 0 #b4a597;
+}
+.keypad #delete {
+    color: white;
+    background-color: #637097;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.keypad #result,
+.keypad #clear {
+    width: 227px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.keypad #result {
+    background-color: #d03f2f;
+    grid-column: 3/5;
+    border: none;
+    box-shadow: 0 4px 0 #681b12;
+}
+
+.keypad #clear {
+    background-color: #637097;
+    grid-column: 1/3;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 4px 0 #404e72;
+}
