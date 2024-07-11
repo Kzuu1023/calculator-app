@@ -20,12 +20,13 @@ body {
     gap: 20px;
 }
 
-#input-number {
+#display {
     width: 540px;
     height: 128px;
     border-radius: 10px;
     border: none;
     background-color: #182034;
+    color: white;
 }
 
 .keypad {
