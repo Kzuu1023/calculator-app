@@ -20,6 +20,12 @@ body {
     gap: 20px;
 }
 
+.display-container .display {
+    display: none;
+    scrollbar-width: none;
+    cursor: not-allowed;
+}
+
 #display {
     width: 540px;
     height: 128px;
@@ -27,6 +33,10 @@ body {
     border: none;
     background-color: #182034;
     color: white;
+    font-weight: bold;
+    font-size: 56px;
+    text-align: right;
+    padding: 2rem;
 }
 
 .keypad {
