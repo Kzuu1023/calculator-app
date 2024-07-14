@@ -8,7 +8,6 @@ const clearBtn = document.getElementById("clear");
 let currentNum = "";
 let previousNum = "";
 let op = null;
-let output = "";
 
 numbers.forEach((btnNum) => {
     btnNum.addEventListener("click", function () {
@@ -25,16 +24,29 @@ numbers.forEach((btnNum) => {
 
 operator.forEach((btnOp) => {
     btnOp.addEventListener("click", function () {
-        if (currentNum === " " && previousNum !== " ") {
+        if (previousNum === "") {
+            previousNum = currentNum; // Store the current number
+            currentNum = ""; // Reset for the next number input
             op = btnOp.textContent;
             display.value = op;
+        } else if (currentNum !== "" && previousNum !== "") {
+            let outcome = operate();
+            op = btnOp.textContent;
+            display.value = op;
+            currentNum = "";
+            previousNum = outcome;
+
+            /* alternative  
+            op = btnOp.textContent;
+            display.value = op;
+            currentNum = operate();
+            previousNum = currentNum;
+            currentNum = "";
+            */
         }
 
-        if (currentNum !== "") {
-            previousNum = currentNum; // Store the current number
-            currentNum = " "; // Reset for the next number input
-            op = btnOp.textContent;
-            display.value = op;
+        if (currentNum === " " && previousNum === " ") {
+            return;
         }
     });
 });
@@ -68,12 +80,18 @@ function operate() {
             result = multiply(previousNum, currentNum);
             break;
         case "/":
-            result = divide(previousNum, currentNum);
-            break;
+            if (currentNum === "0") {
+                result = "undefined";
+            } else {
+                result = divide(previousNum, currentNum);
+                break;
+            }
     }
 
     return result.toString();
 }
+
+let output = "";
 
 function result() {
     resultBtn.addEventListener("click", () => {
@@ -89,7 +107,8 @@ function clear() {
     clearBtn.addEventListener("click", () => {
         output = "";
         display.value = " ";
-        currentNum = previousNum;
+        currentNum = "";
+        previousNum = "";
         op = "";
     });
 }
