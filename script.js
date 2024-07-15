@@ -1,7 +1,7 @@
 let numbers = document.querySelectorAll(".btn-num");
 const display = document.getElementById("display");
 const operator = document.querySelectorAll(".operator");
-const del = document.getElementById("delete");
+const deleteBtn = document.getElementById("delete");
 const resultBtn = document.getElementById("result");
 const clearBtn = document.getElementById("clear");
 
@@ -12,13 +12,18 @@ let op = null;
 numbers.forEach((btnNum) => {
     btnNum.addEventListener("click", function () {
         const value = btnNum.textContent;
-        currentNum += value;
-        display.value = currentNum;
 
         /*my first solution
         display.value += btnNum.textContent;
         console.log(display); 
         */
+
+        if (value === ".") {
+            currentNum += value;
+        } else {
+            currentNum += value;
+        }
+        display.value = currentNum;
     });
 });
 
@@ -69,23 +74,27 @@ function divide(a, b) {
 
 function operate() {
     let result = "";
+    const prev = parseFloat(previousNum);
+    const curr = parseFloat(currentNum);
     switch (op) {
         case "+":
-            result = add(parseInt(previousNum), parseInt(currentNum));
+            result = add(prev, curr);
             break;
         case "-":
-            result = subtract(previousNum, currentNum);
+            result = subtract(prev, curr);
             break;
         case "x":
-            result = multiply(previousNum, currentNum);
+            result = multiply(prev, curr);
             break;
         case "/":
             if (currentNum === "0") {
                 result = "undefined";
             } else {
-                result = divide(previousNum, currentNum);
+                result = divide(prev, curr);
                 break;
             }
+        default:
+            return;
     }
 
     return result.toString();
@@ -97,7 +106,7 @@ function result() {
     resultBtn.addEventListener("click", () => {
         output = operate();
         display.value = output;
-        currentNum = output.toString();
+        currentNum = output;
         previousNum = "";
         op = null;
     });
@@ -114,7 +123,7 @@ function clear() {
 }
 
 function handleDelete() {
-    del.addEventListener("click", () => {
+    deleteBtn.addEventListener("click", () => {
         display.value = display.value.slice(0, -1);
         currentNum = "";
     });
