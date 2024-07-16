@@ -18,17 +18,36 @@ numbers.forEach((btnNum) => {
         console.log(display); 
         */
 
-        if (value === ".") {
-            currentNum += value;
+        if (value === "." && currentNum === "") {
+            currentNum = "0.";
+            display.value = currentNum;
+        } else if (currentNum.includes(".") && value === ".") {
+            return;
         } else {
             currentNum += value;
+            display.value = formattedNumber(currentNum);
         }
-        display.value = currentNum;
+
+        const [firstNumPart, secondNumPart] = currentNum.split(".");
+
+        if (
+            firstNumPart.length > 12 ||
+            (secondNumPart && secondNumPart.length > 6)
+        ) {
+            currentNum = currentNum.slice(0, -1);
+            return;
+        } else {
+            return "too large";
+        }
     });
 });
 
 operator.forEach((btnOp) => {
     btnOp.addEventListener("click", function () {
+        if (currentNum === " " && previousNum === " ") {
+            return;
+        }
+
         if (previousNum === "") {
             previousNum = currentNum; // Store the current number
             currentNum = ""; // Reset for the next number input
@@ -48,10 +67,6 @@ operator.forEach((btnOp) => {
             previousNum = currentNum;
             currentNum = "";
             */
-        }
-
-        if (currentNum === " " && previousNum === " ") {
-            return;
         }
     });
 });
@@ -105,7 +120,7 @@ let output = "";
 function result() {
     resultBtn.addEventListener("click", () => {
         output = operate();
-        display.value = output;
+        display.value = parseFloat(output).toFixed(2);
         currentNum = output;
         previousNum = "";
         op = null;
@@ -115,7 +130,7 @@ function result() {
 function clear() {
     clearBtn.addEventListener("click", () => {
         output = "";
-        display.value = " ";
+        display.value = "0";
         currentNum = "";
         previousNum = "";
         op = "";
@@ -124,10 +139,16 @@ function clear() {
 
 function handleDelete() {
     deleteBtn.addEventListener("click", () => {
-        display.value = display.value.slice(0, -1);
-        currentNum = "";
+        currentNum = currentNum.slice(0, -1);
+        display.value = currentNum;
+
+        if (display.value === "") {
+            return (display.value = "0");
+        }
     });
 }
+
+function formattedNumber(number) {}
 
 result();
 handleDelete();
