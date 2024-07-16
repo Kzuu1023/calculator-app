@@ -148,7 +148,17 @@ function handleDelete() {
     });
 }
 
-function formattedNumber(number) {}
+function formattedNumber(number) {
+    if (number.includes(".")) {
+        const [firstNumPart, secondNumPart] = currentNum.split(".");
+        const formattedFirstNum = parseFloat(firstNumPart).toLocaleString("en");
+
+        return `${formattedFirstNum}.${secondNumPart}`;
+    }
+
+    const formattedFirstNum = parseFloat(number).toLocaleString("en");
+    return formattedFirstNum;
+}
 
 result();
 handleDelete();
