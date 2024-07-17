@@ -88,7 +88,7 @@ function divide(a, b) {
 }
 
 function operate() {
-    let result = "";
+    let result;
     const prev = parseFloat(previousNum);
     const curr = parseFloat(currentNum);
     switch (op) {
@@ -120,7 +120,19 @@ let output = "";
 function result() {
     resultBtn.addEventListener("click", () => {
         output = operate();
-        display.value = parseFloat(output).toFixed(2);
+
+        if (output.includes(".")) {
+            let [firstNumPart, secondNumPart] = output.split(".");
+            const formattedFirstNum =
+                parseFloat(firstNumPart).toLocaleString("en");
+            const formattedSecondNum = parseFloat(secondNumPart).toFixed(2);
+            if (formattedSecondNum.length > 2) {
+                display.value = `${formattedFirstNum}.${secondNumPart}`;
+            }
+        } else {
+            display.value = formattedNumber(output);
+        }
+
         currentNum = output;
         previousNum = "";
         op = null;
@@ -140,7 +152,7 @@ function clear() {
 function handleDelete() {
     deleteBtn.addEventListener("click", () => {
         currentNum = currentNum.slice(0, -1);
-        display.value = currentNum;
+        display.value = formattedNumber(currentNum);
 
         if (display.value === "") {
             return (display.value = "0");
@@ -154,10 +166,10 @@ function formattedNumber(number) {
         const formattedFirstNum = parseFloat(firstNumPart).toLocaleString("en");
 
         return `${formattedFirstNum}.${secondNumPart}`;
+    } else {
+        const formattedFirstNum = parseFloat(number).toLocaleString("en");
+        return formattedFirstNum;
     }
-
-    const formattedFirstNum = parseFloat(number).toLocaleString("en");
-    return formattedFirstNum;
 }
 
 result();
